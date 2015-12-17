@@ -30,9 +30,31 @@ void QNT::Load(string path) {
     Path = path;
     Filename = string(basename((char*) Path.c_str()));
 
-    cout << "< " << path << endl;
+    cout << "< " << Path << endl;
 
-    mSize = Common::ReadFile(path, &mBytes);
+    u_char* bytes = 0;
+    size_t size = 0;
+
+    size = Common::ReadFile(Path, &bytes);
+
+    Load(bytes, size);
+
+}
+
+void QNT::Load(u_char* bytes, size_t size) {
+
+    if(Path.empty()) {
+
+        // So QNT simply takes bytes but never releases on its own.
+
+        Path = "MEMORY";
+        Filename = "MEMORY";
+        cout << "= " << Path << endl;
+
+    }
+
+    mBytes = bytes;
+    mSize = size;
 
     int32_t version = *reinterpret_cast<int32_t*>(&mBytes[4]);
 
@@ -263,9 +285,14 @@ u_char* QNT::GetData() {
 
 QNT::~QNT() {
 
-    delete[] mBytes;
+    if(Path != "MEMORY") {
+
+        delete[] mBytes;
+        // Info is a pointer to mBytes'.
+        //delete Info;
+
+    }
+
     delete[] mImage;
-    // Info is a pointer to mBytes'.
-    //delete Info;
 
 }

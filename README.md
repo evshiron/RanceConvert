@@ -1,6 +1,6 @@
 # RanceConvert
 
-A simple command line tool that converts `.qnt` to `.png`. Original `.ppm` (P3/P7) support is deprecated.
+A simple command line tool that converts `.qnt` and `.dcf` to `.png`. Original `.ppm` (P3/P7) support is deprecated.
 
 Susie is too old and not so convenient, and fortunately the `.spi` has provided the source along with the binary. Here comes the `RanceConvert`.
 

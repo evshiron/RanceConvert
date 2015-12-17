@@ -5,6 +5,7 @@
 
 #include "common.h"
 #include "formats/qnt.h"
+#include "formats/dcf.h"
 
 using namespace std;
 
@@ -24,18 +25,36 @@ int main(int argc, char** argv) {
 
     for(int i = 1; i < argc; i++) {
 
-        QNT qnt;
-        qnt.Load(string(argv[i]));
+        if(string(argv[i]).find(".qnt") != string::npos) {
 
-        string path = qnt.Path + ".png";
+            QNT qnt;
+            qnt.Load(argv[i]);
 
-        cout << "> " << path << endl;
+            string path = qnt.Path + ".png";
 
-        //Common::OutputP3PPM(qnt.Path + ".p3.ppm", qnt.Info->width, qnt.Info->height, qnt.GetData());
-        //Common::OutputP7PPM(qnt.Path + ".p7.ppm", qnt.Info->width, qnt.Info->height, qnt.GetData());
-        Common::OutputPNG(path, qnt.Info->width, qnt.Info->height, qnt.GetData());
+            cout << "> " << path << endl;
 
-        cout << "Saved." << endl;
+            //Common::OutputP3PPM(qnt.Path + ".p3.ppm", qnt.Info->width, qnt.Info->height, qnt.GetData());
+            //Common::OutputP7PPM(qnt.Path + ".p7.ppm", qnt.Info->width, qnt.Info->height, qnt.GetData());
+            Common::OutputPNG(path, qnt.Info->width, qnt.Info->height, qnt.GetData());
+
+            cout << "Saved." << endl;
+
+        }
+        else if(string(argv[i]).find(".dcf") != string::npos) {
+
+            DCF dcf;
+            dcf.Load(argv[i]);
+
+            string path = dcf.Path + ".png";
+
+            cout << "> " << path << endl;
+
+            Common::OutputPNG(path, dcf.Qnt->Info->width, dcf.Qnt->Info->height, dcf.Qnt->GetData());
+
+            cout << "Saved." << endl;
+
+        }
 
     }
 

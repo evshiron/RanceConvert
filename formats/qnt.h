@@ -41,6 +41,7 @@ public:
 
     QNT();
     void Load(string path);
+    void Load(u_char* bytes, size_t size);
     u_char* GetData();
     ~QNT();
 
