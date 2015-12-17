@@ -41,8 +41,7 @@ public:
 
     QNT();
     void Load(string path);
-    void OutputP3PPM();
-    void OutputP7PPM();
+    u_char* GetData();
     ~QNT();
 
 };

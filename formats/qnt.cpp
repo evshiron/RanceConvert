@@ -232,7 +232,7 @@ void QNT::Load(string path) {
 
         int t = 0;
 
-        for(int i = Info->height - 1; i >= 0; i--) {
+        for(int i = 0; i < Info->height; i++) {
 
             for(int j = 0; j < Info->width; j++) {
 
@@ -255,60 +255,9 @@ void QNT::Load(string path) {
 
 }
 
-void QNT::OutputP3PPM() {
+u_char* QNT::GetData() {
 
-    cout << "OutputP3PPM starts." << endl;
-
-    string path = Path + ".p3.ppm";
-
-    cout << "> " << path << endl;
-
-    ofstream ofs(path);
-
-    ofs << "P3" << endl;
-    ofs << Info->width << " " << Info->height << " " << 255 << endl;
-
-    for(int i = 0; i < Info->width * Info->height; i++) {
-
-        ofs << (int) mImage[i*4+0] << " " << (int) mImage[i*4+1] << " " << (int) mImage[i*4+2] << endl;
-
-    }
-
-    ofs.flush();
-    ofs.close();
-
-    cout << "OutputP3PPM ends." << endl;
-
-}
-
-void QNT::OutputP7PPM() {
-
-    cout << "OutputP7PPM starts." << endl;
-
-    string path = Path + ".p7.ppm";
-
-    cout << "> " << path << endl;
-
-    ofstream ofs(path);
-
-    ofs << "P7" << endl;
-    ofs << "WIDTH " << Info->width << endl;
-    ofs << "HEIGHT " << Info->height << endl;
-    ofs << "DEPTH " << 4 << endl;
-    ofs << "MAXVAL " << 255 << endl;
-    ofs << "TUPLTYPE RGB_ALPHA" << endl;
-    ofs << "ENDHDR" << endl;
-
-    for(int i = 0; i < Info->width * Info->height; i++) {
-
-        ofs << mImage[i*4+0] << mImage[i*4+1] << mImage[i*4+2] << mImage[i*4+3];
-
-    }
-
-    ofs.flush();
-    ofs.close();
-
-    cout << "OutputP7PPM ends." << endl;
+    return mImage;
 
 }
 
