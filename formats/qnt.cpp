@@ -75,9 +75,9 @@ void QNT::Load(string path) {
 
         cout << "bufferSize: " << destSize << endl;
 
-        u_char image[destSize];
+        u_char* image = new u_char[destSize];
 
-        u_char data[destSize];
+        u_char* data = new u_char[destSize];
         if(uncompress(data, &destSize, &mBytes[headerSize], Info->imageSize) != Z_OK) FATAL("ERROR_UNCOMPRESS_IMAGE");
 
         cout << "uncompressedSize: " << destSize << endl;
@@ -151,10 +151,12 @@ void QNT::Load(string path) {
             }
         }
 
+        delete[] data;
+
         cout << "RGB handle ends." << endl;
 
         if(Info->alphaSize)
-        {{
+        {
 
             // rowBytes (used), destSize (redefined), image (used as ti), data (redefined), dest (redefined), ti (copied as dest), tj (unused).
             // Should not be a problem here?
@@ -165,7 +167,7 @@ void QNT::Load(string path) {
 
             cout << "bufferSize: " << destSize << endl;
 
-            u_char data[destSize];
+            u_char* data = new u_char[destSize];
             if(uncompress(data, &destSize, &mBytes[headerSize + Info->imageSize], Info->alphaSize) != Z_OK) FATAL("ERROR_UNCOMPRESS_ALPHA");
 
             cout << "uncompressedSize: " << destSize << endl;
@@ -216,10 +218,12 @@ void QNT::Load(string path) {
                 tk = &tk[(Info->width + 1) & ~1];
             }
 
+            delete[] data;
+
             // TODO: Make (233, 233, 233) the transparent color or merge alpha into RGBA.
             cout << "Alpha handle ends." << endl;
 
-        }}
+        }
 
         // Now the image is the BGR data with 4-byte alignment per row, upside down.
         // Let's convert it to RGBA data, and store it into the mImage.
@@ -244,6 +248,8 @@ void QNT::Load(string path) {
             }
 
         }
+
+        delete[] image;
 
     }
 
