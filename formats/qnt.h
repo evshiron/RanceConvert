@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <string>
 
-#define QNT_MARGIN 4096
+#define QNT_MARGIN 32768
 
 using namespace std;
 
